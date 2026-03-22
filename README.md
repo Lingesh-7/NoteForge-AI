@@ -1,178 +1,78 @@
-Here’s a **clean, professional, GitHub-ready `README.md`** version of your project. I’ve improved structure, clarity, formatting, and added slight polish so it looks like a serious AI project (resume-worthy + recruiter-friendly).
+# 🚀 NoteForge-AI  
+### Multi-Agent AI System for Generating Exam-Ready Notes
 
----
-
-````markdown
-# 🚀 NoteForge-AI
-
-Generate **structured, exam-ready notes** from a syllabus using a **multi-agent AI system**.
+> Transform any syllabus into **structured, high-quality notes + important questions** using autonomous AI agents.
 
 ---
 
 ## 📌 Overview
 
-**NoteForge-AI** converts a syllabus (and optionally a reference book PDF) into:
+**NoteForge-AI** is a multi-agent AI system that automates the entire note-generation pipeline:
 
-- 📖 Structured topic-wise notes  
-- 🧠 Clear explanations (definitions, intuition, examples)  
-- 📝 Unit-level important exam questions  
-- 📄 Downloadable, well-formatted PDF  
+- Converts raw syllabus into structured topics  
+- Extracts knowledge from PDFs or the web (RAG)  
+- Generates clean, exam-focused notes  
+- Produces unit-wise important questions  
+- Exports everything into a formatted PDF  
 
-It leverages a **multi-agent workflow** to plan, research, write, review, and refine content automatically.
-
----
-
-## ⚙️ Features
-
-- 🤖 Multi-agent architecture (LangGraph)
-- 📚 Works with:
-  - Uploaded PDF (RAG-based)
-  - Web search fallback (Tavily)
-- 🔁 Self-improving notes using critic loop
-- 🎯 Exam-focused structured output
-- 🧩 Unit-level important questions
-- 📄 PDF export support
-- ⚡ Caching for faster repeated runs
+This system mimics how a **top student prepares notes**, but does it autonomously using LLM agents.
 
 ---
 
-## 🧠 Architecture
+## 🎯 Key Capabilities
+
+- 🧠 **Multi-Agent Workflow** (Planner → Researcher → Writer → Critic → Exam Generator)  
+- 📚 **Hybrid Knowledge Retrieval**
+  - PDF-based RAG (primary)
+  - Web fallback via Tavily  
+- 🔁 **Self-Improving Output** using critic feedback loop  
+- 📝 **Exam-Oriented Content Generation**  
+- 📄 **Automated PDF Export**  
+- ⚡ **Caching Layer** for performance optimization  
+
+---
+
+## 🧠 System Architecture
 
 ![Architecture](image.png)
 
+> Built using a modular **LangGraph agent pipeline** with iterative refinement loops.
+
 ---
 
-## 🔄 Workflow
+## 🔄 Execution Pipeline
 
-1. **Planner** → Breaks syllabus into structured topics
-2. **Researcher** → Fetches content (PDF / Web)
-3. **Writer** → Generates notes
-4. **Critic** → Improves quality (loop until pass)
-5. **Exam Agent** → Creates important questions
-6. **Topic Loop** → Iterates for all topics
-7. **Final Generator** → Combines everything
-8. **Formatter** → Produces clean PDF
+| Stage | Agent | Responsibility |
+|------|------|----------------|
+| 1 | Planner | Break syllabus into structured topics |
+| 2 | Researcher | Retrieve relevant content (PDF/Web) |
+| 3 | Writer | Generate structured notes |
+| 4 | Critic | Evaluate & refine output (iterative loop) |
+| 5 | Exam Agent | Generate important questions |
+| 6 | Aggregator | Combine all topics |
+| 7 | Formatter | Generate final PDF |
 
 ---
 
 ## 🧰 Tech Stack
 
-* **LangGraph** – Agent workflow orchestration
-* **LangChain** – LLM pipelines
-* **Groq** – LLM inference
-* **FAISS** – Vector database
-* **Sentence Transformers** – Embeddings
-* **PyMuPDF** – PDF parsing
-* **Tavily** – Web search
-* **Streamlit** – UI
-* **FPDF** – PDF generation
+| Layer | Tools |
+|------|------|
+| Orchestration | LangGraph |
+| LLM Framework | LangChain |
+| Inference | Groq |
+| Retrieval | FAISS |
+| Embeddings | Sentence Transformers |
+| PDF Processing | PyMuPDF |
+| Web Search | Tavily |
+| Frontend | Streamlit |
+| Output | FPDF |
 
 ---
 
-## 📦 Installation
+## ⚙️ Installation
 
 ```bash
-git clone https://github.com/your-username/noteforge-ai.git
+git clone https://github.com/Lingesh-7/noteforge-ai.git
 cd noteforge-ai
-
 pip install -r requirements.txt
-```
-
----
-
-## 🔐 Environment Variables
-
-Create a `.env` file:
-
-```env
-GROQ_API_KEY=your_api_key
-TAVILY_API_KEY=your_api_key
-```
-
-> Alternatively, you can enter the Groq API key directly in the UI.
-
----
-
-## ▶️ Usage
-
-```bash
-streamlit run app.py
-```
-
-### Steps
-
-1. Enter syllabus
-2. (Optional) Upload book PDF
-3. Click **Generate Notes**
-4. Download PDF
-
----
-
-## 📁 Project Structure
-
-```
-.
-├── app.py
-├── graph/
-│   ├── nodes.py
-│   ├── graph_builder.py
-│   └── state.py
-├── prompts/
-├── rag/
-├── utils/
-├── fonts/
-├── requirements.txt
-└── README.md
-```
-
----
-
-## 📝 Notes
-
-* Uses PDF as primary source (if provided)
-* Falls back to web search otherwise
-* Caching reduces API calls
-* Critic loop ensures output quality
-
----
-
-## ⚠️ Limitations
-
-* API rate limits may affect long runs
-* Output quality depends on input content
-* Large syllabus may require multiple runs
-
----
-
-## 🚀 Future Improvements
-
-* 🎨 Better PDF styling
-* 🧠 Semantic caching
-* 📤 Export to DOCX / Markdown
-* ⚡ Fast vs Quality mode
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open issues or submit pull requests.
-
----
-
-## 📜 License
-
-MIT License
-
----
-
-## 💡 Inspiration
-
-Built to solve a real student problem:
-
-> Turning messy syllabus content into structured, exam-ready notes efficiently.
-
----
-
-```
-
----
