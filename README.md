@@ -76,3 +76,27 @@ This system mimics how a **top student prepares notes**, but does it autonomousl
 git clone https://github.com/Lingesh-7/noteforge-ai.git
 cd noteforge-ai
 pip install -r requirements.txt
+```
+## 🔐 Environment Setup
+Create a .env file in the root directory:
+```
+GROQ_API_KEY=your_api_key
+TAVILY_API_KEY=your_api_key
+```
+## ▶️ Usage
+Run the application:
+```streamlit run app.py ```
+
+
+## 📁 Project Structure
+├── app.py
+├── graph/
+│   ├── nodes.py
+│   ├── graph_builder.py
+│   └── state.py
+├── prompts/
+├── rag/
+├── utils/
+├── fonts/
+├── requirements.txt
+└── README.md
