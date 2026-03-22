@@ -15,7 +15,7 @@
 - Produces unit-wise important questions  
 - Exports everything into a formatted PDF  
 
-This system mimics how a **top student prepares notes**, but does it autonomously using LLM agents.
+This system mimics how a **top student prepares notes**, but executes it autonomously using LLM-powered agents.
 
 ---
 
@@ -23,7 +23,7 @@ This system mimics how a **top student prepares notes**, but does it autonomousl
 
 - 🧠 **Multi-Agent Workflow** (Planner → Researcher → Writer → Critic → Exam Generator)  
 - 📚 **Hybrid Knowledge Retrieval**
-  - PDF-based RAG (primary)
+  - PDF-based RAG (primary source)
   - Web fallback via Tavily  
 - 🔁 **Self-Improving Output** using critic feedback loop  
 - 📝 **Exam-Oriented Content Generation**  
@@ -77,19 +77,20 @@ git clone https://github.com/Lingesh-7/noteforge-ai.git
 cd noteforge-ai
 pip install -r requirements.txt
 ```
+
+---
+
 ## 🔐 Environment Setup
-Create a .env file in the root directory:
-```
+
+Create a `.env` file in the root directory:
+
+```env
 GROQ_API_KEY=your_api_key
 TAVILY_API_KEY=your_api_key
 ```
-## ▶️ Usage
-Run the application:
-```streamlit run app.py ```
 
-
-## 📁 Project Structure
-
+## Project Strucutre
+.
 ├── app.py
 ├── graph/
 │   ├── nodes.py
@@ -101,3 +102,7 @@ Run the application:
 ├── fonts/
 ├── requirements.txt
 └── README.md
+
+## Motivation
+Students spend hours converting scattered syllabus content into structured notes.
+NoteForge-AI automates that entire workflow intelligently.
