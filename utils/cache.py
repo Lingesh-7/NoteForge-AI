@@ -1,27 +1,36 @@
 import json
 import os
+import tempfile
 
-CACHE_FILE = "cache.json"
+CACHE_FILE = os.path.join(tempfile.gettempdir(), "noteforge_cache.json")
 
-
-def load_cache():
-    if not os.path.exists(CACHE_FILE):
-        return {}
-    with open(CACHE_FILE, "r") as f:
-        return json.load(f)
+# Load once into memory at startup — no repeated disk reads
+_cache: dict = {}
+_loaded = False
 
 
-def save_cache(cache):
-    with open(CACHE_FILE, "w") as f:
-        json.dump(cache, f, indent=2)
+def _ensure_loaded():
+    global _cache, _loaded
+    if not _loaded:
+        if os.path.exists(CACHE_FILE):
+            try:
+                with open(CACHE_FILE, "r", encoding="utf-8") as f:
+                    _cache = json.load(f)
+            except Exception:
+                _cache = {}
+        _loaded = True
 
 
 def get_from_cache(key):
-    cache = load_cache()
-    return cache.get(key)
+    _ensure_loaded()
+    return _cache.get(key)
 
 
 def set_cache(key, value):
-    cache = load_cache()
-    cache[key] = value
-    save_cache(cache)
+    _ensure_loaded()
+    _cache[key] = value
+    try:
+        with open(CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(_cache, f, indent=2)
+    except Exception:
+        pass

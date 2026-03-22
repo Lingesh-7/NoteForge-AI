@@ -5,7 +5,8 @@ class GraphState(TypedDict):
     # -------- INPUT --------
     syllabus: str
     has_book: bool
-    vectorstore: Any   # stores FAISS or None
+    vectorstore: Any        # stores FAISS or None
+    api_key: str            # GROQ API key from UI
 
     # -------- TOPIC FLOW --------
     topics: List[str]
@@ -21,13 +22,12 @@ class GraphState(TypedDict):
     critic_pass: bool
     retry_count: int
 
-    # -------- FINAL OUTPUT PER TOPIC --------
-    final_notes: str
-    exam_questions: str
-
     # -------- AGGREGATED OUTPUT --------
     all_notes: List[str]
     all_questions: List[str]
+
+    # -------- EXAM QUESTIONS --------
+    unit_questions: str     # set by final_exam_node, read by formatter_node
 
     # -------- FINAL DOCUMENT --------
     final_document: str

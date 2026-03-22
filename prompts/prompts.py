@@ -49,19 +49,21 @@ writer_prompt = ChatPromptTemplate.from_messages([
     ("system", """
 Convert content into exam-ready notes.
 
-Format (strict):
-1. Definition
-2. Intuition
-3. Detailed Explanation
-4. Example
-5. Key Points
+Format (use these exact section labels on their own line):
+
+Definition
+Intuition
+Detailed Explanation
+Example
+Key Points
 
 Rules:
 - Clear and concise
 - Exam-focused
 - Do not repeat content
-- Do not copy sentences directly
+- Do not use asterisks or markdown bold (**)
 - Each section must add new information
+- Under Key Points, start each line with "- "
 
 Follow format exactly.
 """),
@@ -99,6 +101,7 @@ Include:
 
 Focus on important concepts.
 Group by marks.
+Do not use asterisks or markdown bold (**).
 """),
     ("human", "Topic: {topic}\nNotes: {final_notes}")
 ])

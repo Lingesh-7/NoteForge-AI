@@ -10,7 +10,7 @@ from utils.cache import get_from_cache, set_cache
 
 load_dotenv()
 
-os.environ["TAVILY_API_KEY"] = os.getenv("TAVILY_API_KEY")
+os.environ["TAVILY_API_KEY"] = os.getenv("TAVILY_API_KEY", "")
 
 tavily_client = TavilyClient()
 
@@ -42,7 +42,9 @@ def planner_node(state: GraphState):
         **state,
         "topics": topics,
         "current_topic_index": 0,
-        "current_topic": topics[0]
+        "current_topic": topics[0],
+        "all_notes": [],
+        "all_questions": [],
     }
 
 
@@ -60,20 +62,11 @@ def researcher_node(state: GraphState):
 
     llm = get_llm(state.get("api_key"))
 
-    query_prompt = f"Generate 2 specific search queries for: {topic}"
-    queries_resp = llm.invoke(query_prompt)
-
-    queries = [
-        q.strip("- ").strip()
-        for q in queries_resp.content.split("\n")
-        if q.strip()
-    ]
-
     docs = []
 
     if has_book and vectorstore:
-        for q in queries:
-            docs.extend(vectorstore.similarity_search(q, k=2))
+        # Search directly with topic name — no LLM call needed for queries
+        docs.extend(vectorstore.similarity_search(topic, k=4))
 
         seen = set()
         filtered = []
@@ -182,6 +175,7 @@ def final_exam_node(state: GraphState):
     llm = get_llm(state.get("api_key"))
 
     notes = state.get("all_notes", [])
+    topics = state.get("topics", [])
 
     if not notes:
         return {
@@ -189,7 +183,13 @@ def final_exam_node(state: GraphState):
             "unit_questions": "Questions unavailable."
         }
 
-    combined = "\n\n".join(notes[:3])[:1200]
+    # Sample from across ALL topics, not just first 3
+    # Use topic headings + first 300 chars of each note to stay within token limit
+    combined = ""
+    for i, note in enumerate(notes):
+        heading = topics[i] if i < len(topics) else f"Topic {i+1}"
+        combined += f"## {heading}\n{note[:300]}\n\n"
+    combined = combined[:2500]
 
     try:
         response = llm.invoke(
@@ -251,4 +251,4 @@ def critic_router(state: GraphState):
 def topic_router(state: GraphState):
     if state["current_topic_index"] + 1 < len(state["topics"]):
         return "next_topic"
-    return "formatter"
+    return "final_exam"

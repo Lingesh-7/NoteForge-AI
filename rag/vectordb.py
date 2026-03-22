@@ -11,8 +11,8 @@ def create_vectorstore(pdf_path: str):
 
     # -------- SPLIT INTO CHUNKS --------
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=400,        # small = better precision
-        chunk_overlap=80       # overlap = context continuity
+        chunk_size=400,
+        chunk_overlap=80
     )
 
     split_docs = splitter.split_documents(documents)

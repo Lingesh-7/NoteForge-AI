@@ -46,7 +46,7 @@ def build_graph():
         topic_router,
         {
             "next_topic": "next_topic",
-            "formatter": "final_exam",
+            "final_exam": "final_exam",
         },
     )
 

@@ -1,10 +1,16 @@
 import os
+import tempfile
 import streamlit as st
 from fpdf import FPDF
 from groq import RateLimitError
 
 from graph.graph_builder import build_graph
 from rag.vectordb import create_vectorstore
+
+# cross-platform temp directory (works on Windows, Linux, Mac, Streamlit Cloud)
+TMP_DIR = tempfile.gettempdir()
+NOTES_PDF  = os.path.join(TMP_DIR, "notes.pdf")
+UPLOAD_PDF = os.path.join(TMP_DIR, "temp.pdf")
 
 
 st.set_page_config(page_title="AI Notes Generator", layout="wide")
@@ -48,7 +54,7 @@ def create_pdf(text: str):
             pdf.set_font("DejaVu", "", 12)
             pdf.multi_cell(0, 7, line)
 
-    pdf.output("notes.pdf")
+    pdf.output(NOTES_PDF)
 
 
 # ---- INPUT ----
@@ -58,8 +64,6 @@ pdf_file = st.file_uploader("Upload Book PDF (optional)", type=["pdf"])
 status_box = st.empty()
 progress_bar = st.progress(0)
 
-graph = build_graph()
-
 
 # ---- GENERATE ----
 if st.button("Generate Notes"):
@@ -68,13 +72,19 @@ if st.button("Generate Notes"):
         st.error("Enter syllabus")
         st.stop()
 
+    if not user_api_key:
+        st.error("Enter your GROQ API Key in the sidebar first")
+        st.stop()
+
+    graph = build_graph()
+
     vectorstore = None
 
     if pdf_file:
         with st.spinner("Processing PDF..."):
-            with open("temp.pdf", "wb") as f:
+            with open(UPLOAD_PDF, "wb") as f:
                 f.write(pdf_file.read())
-            vectorstore = create_vectorstore("temp.pdf")
+            vectorstore = create_vectorstore(UPLOAD_PDF)
 
     state = {
         "syllabus": syllabus,
@@ -83,6 +93,7 @@ if st.button("Generate Notes"):
         "api_key": user_api_key,
         "topics": [],
         "current_topic_index": 0,
+        "current_topic": "",
         "all_notes": [],
         "all_questions": [],
         "retry_count": 0,
@@ -90,8 +101,7 @@ if st.button("Generate Notes"):
         "critic_pass": False,
         "research_content": "",
         "draft_notes": "",
-        "final_notes": "",
-        "exam_questions": "",
+        "unit_questions": "",
         "final_document": ""
     }
 
@@ -118,11 +128,9 @@ if st.button("Generate Notes"):
         rate_limited = True
         status_box.warning("Rate limit reached. Returning partial output.")
 
-
     if current_state is None:
         st.error("Generation failed")
         st.stop()
-
 
     if rate_limited:
         notes = current_state.get("all_notes", [])
@@ -137,9 +145,30 @@ if st.button("Generate Notes"):
     else:
         final_doc = current_state.get("final_document", "")
 
-
     with st.spinner("Creating PDF..."):
         create_pdf(final_doc)
 
-    with open("notes.pdf", "rb") as f:
+    # ---- PREVIEW ----
+    st.subheader("Preview")
+    SECTION_LABELS = {"Definition", "Intuition", "Detailed Explanation", "Example", "Key Points"}
+    MARK_LABELS    = {"2 Marks", "5 Marks", "10 Marks"}
+
+    for line in final_doc.split("\n"):
+        s = line.strip()
+        if not s:
+            continue
+        if s.startswith("# "):
+            st.markdown(f"### {s[2:]}")
+            st.divider()
+        elif s in SECTION_LABELS:
+            st.markdown(f"**{s}**")
+        elif s in MARK_LABELS:
+            st.markdown(f"**{s}**")
+        elif s.startswith("- "):
+            st.markdown(s)
+        else:
+            st.write(s)
+
+    # ---- DOWNLOAD ----
+    with open(NOTES_PDF, "rb") as f:
         st.download_button("Download PDF", f, file_name="notes.pdf")
