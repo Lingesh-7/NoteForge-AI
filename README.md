@@ -1,80 +1,14 @@
-# 🚀 NoteForge-AI  
-### Multi-Agent AI System for Generating Exam-Ready Notes
+# NoteForge-AI
 
-> Transform any syllabus into **structured, high-quality notes + important questions** using autonomous AI agents.
-
----
-
-## 📌 Overview
-
-**NoteForge-AI** is a multi-agent AI system that automates the entire note-generation pipeline:
-
-- Converts raw syllabus into structured topics  
-- Extracts knowledge from PDFs or the web (RAG)  
-- Generates clean, exam-focused notes  
-- Produces unit-wise important questions  
-- Exports everything into a formatted PDF  
-
-This system mimics how a **top student prepares notes**, but executes it autonomously using LLM-powered agents.
+An intelligent, agent-based note generation system that converts syllabus content into structured, downloadable PDF notes.
 
 ---
 
-## 🎯 Key Capabilities
-
-- 🧠 **Multi-Agent Workflow** (Planner → Researcher → Writer → Critic → Exam Generator)  
-- 📚 **Hybrid Knowledge Retrieval**
-  - PDF-based RAG (primary source)
-  - Web fallback via Tavily  
-- 🔁 **Self-Improving Output** using critic feedback loop  
-- 📝 **Exam-Oriented Content Generation**  
-- 📄 **Automated PDF Export**  
-- ⚡ **Caching Layer** for performance optimization  
-
----
-
-## 🧠 System Architecture
-
-![Architecture](image.png)
-
-> Built using a modular **LangGraph agent pipeline** with iterative refinement loops.
-
----
-
-## 🔄 Execution Pipeline
-
-| Stage | Agent | Responsibility |
-|------|------|----------------|
-| 1 | Planner | Break syllabus into structured topics |
-| 2 | Researcher | Retrieve relevant content (PDF/Web) |
-| 3 | Writer | Generate structured notes |
-| 4 | Critic | Evaluate & refine output (iterative loop) |
-| 5 | Exam Agent | Generate important questions |
-| 6 | Aggregator | Combine all topics |
-| 7 | Formatter | Generate final PDF |
-
----
-
-## 🧰 Tech Stack
-
-| Layer | Tools |
-|------|------|
-| Orchestration | LangGraph |
-| LLM Framework | LangChain |
-| Inference | Groq |
-| Retrieval | FAISS |
-| Embeddings | Sentence Transformers |
-| PDF Processing | PyMuPDF |
-| Web Search | Tavily |
-| Frontend | Streamlit |
-| Output | FPDF |
-
----
-
-## ⚙️ Installation
+## 🛠️ Installation
 
 ```bash
-git clone https://github.com/Lingesh-7/noteforge-ai.git
-cd noteforge-ai
+git clone https://github.com/your-username/NoteForge-AI.git
+cd NoteForge-AI
 pip install -r requirements.txt
 ```
 
@@ -89,7 +23,34 @@ GROQ_API_KEY=your_api_key
 TAVILY_API_KEY=your_api_key
 ```
 
-## Project Strucutre
+> ⚠️ **Important:** Never commit `.env` to GitHub. Ensure it is added to `.gitignore`.
+
+---
+
+## ▶️ Usage
+
+Run the application:
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## 🔄 Workflow
+
+```text
+1. Enter the syllabus
+2. Upload reference PDF (optional)
+3. Click Generate Notes
+4. Download the structured PDF
+```
+
+---
+
+## 📁 Project Structure
+
+```bash
 .
 ├── app.py
 ├── graph/
@@ -102,7 +63,71 @@ TAVILY_API_KEY=your_api_key
 ├── fonts/
 ├── requirements.txt
 └── README.md
+```
 
-## Motivation
+---
+
+## 📊 Design Highlights
+
+```text
+- Modular agent-based architecture (extensible)
+- Separation of reasoning, retrieval, and generation
+- Iterative refinement improves output quality
+- Works with incomplete or minimal input
+```
+
+---
+
+## ⚠️ Limitations
+
+```text
+- Dependent on LLM API rate limits
+- Output quality depends on input clarity
+- Large syllabi may increase runtime
+```
+
+---
+
+## 🚀 Roadmap
+
+```text
+[ ] Advanced PDF styling & formatting
+[ ] Semantic caching (vector reuse)
+[ ] Export to DOCX / Markdown
+[ ] Configurable agent strategies (fast vs high-quality)
+[ ] Evaluation metrics for generated notes
+```
+
+---
+
+## 🤝 Contributing
+
+```text
+Contributions, improvements, and ideas are welcome.
+Feel free to open issues or submit pull requests.
+```
+
+---
+
+## 📜 License
+
+```text
+MIT License
+```
+
+---
+
+## 💡 Motivation
+
+```text
 Students spend hours converting scattered syllabus content into structured notes.
 NoteForge-AI automates that entire workflow intelligently.
+```
+
+---
+
+## ⭐ Support
+
+```text
+If you find this project useful, consider giving it a star ⭐
+```
