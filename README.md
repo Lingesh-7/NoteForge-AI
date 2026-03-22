@@ -1,6 +1,44 @@
 # NoteForge-AI
 
-An intelligent, agent-based note generation system that converts syllabus content into structured, downloadable PDF notes.
+NoteForge-AI is a multi-agent AI system that converts a syllabus into structured, exam-ready notes with unit-level questions and PDF export.
+
+---
+
+## 🧠 Overview
+
+The system uses an agent-based workflow to:
+
+```text
+- Break syllabus into topics
+- Retrieve relevant content (PDF or web)
+- Generate structured notes
+- Refine output using a critic loop
+- Produce final notes with important questions
+```
+
+---
+
+## 🏗️ Architecture
+
+<p align="center">
+  <img src="assets/graph.png" width="600"/>
+</p>
+
+---
+
+## ✨ Features
+
+```text
+- Multi-agent pipeline (LangGraph)
+- Works with:
+    - Uploaded PDF (RAG)
+    - Web fallback (Tavily)
+- Self-improving notes using critic loop
+- Structured, exam-oriented output
+- Unit-level important questions
+- PDF generation
+- Caching for faster runs
+```
 
 ---
 
@@ -29,15 +67,13 @@ TAVILY_API_KEY=your_api_key
 
 ## ▶️ Usage
 
-Run the application:
-
 ```bash
 streamlit run app.py
 ```
 
 ---
 
-## 🔄 Workflow
+## 🔄 Steps
 
 ```text
 1. Enter the syllabus
@@ -61,19 +97,10 @@ streamlit run app.py
 ├── rag/
 ├── utils/
 ├── fonts/
+├── assets/
+│   └── graph.png
 ├── requirements.txt
 └── README.md
-```
-
----
-
-## 📊 Design Highlights
-
-```text
-- Modular agent-based architecture (extensible)
-- Separation of reasoning, retrieval, and generation
-- Iterative refinement improves output quality
-- Works with incomplete or minimal input
 ```
 
 ---
@@ -81,9 +108,9 @@ streamlit run app.py
 ## ⚠️ Limitations
 
 ```text
-- Dependent on LLM API rate limits
-- Output quality depends on input clarity
-- Large syllabi may increase runtime
+- API rate limits may interrupt generation
+- Large inputs increase latency
+- Output quality depends on source quality
 ```
 
 ---
@@ -91,10 +118,10 @@ streamlit run app.py
 ## 🚀 Roadmap
 
 ```text
-[ ] Advanced PDF styling & formatting
+[ ] Better PDF styling & formatting
 [ ] Semantic caching (vector reuse)
 [ ] Export to DOCX / Markdown
-[ ] Configurable agent strategies (fast vs high-quality)
+[ ] Fast vs High-Quality mode
 [ ] Evaluation metrics for generated notes
 ```
 
