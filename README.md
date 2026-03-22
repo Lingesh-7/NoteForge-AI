@@ -45,7 +45,7 @@ The system uses an agent-based workflow to:
 ## 🛠️ Installation
 
 ```bash
-git clone https://github.com/your-username/NoteForge-AI.git
+git clone https://github.com/Lingesh-7/NoteForge-AI.git
 cd NoteForge-AI
 pip install -r requirements.txt
 ```
