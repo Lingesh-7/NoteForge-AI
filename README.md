@@ -89,6 +89,7 @@ Run the application:
 
 
 ## 📁 Project Structure
+
 ├── app.py
 ├── graph/
 │   ├── nodes.py
