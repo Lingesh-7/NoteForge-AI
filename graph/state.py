@@ -31,3 +31,5 @@ class GraphState(TypedDict):
 
     # -------- FINAL DOCUMENT --------
     final_document: str
+
+    mode: str

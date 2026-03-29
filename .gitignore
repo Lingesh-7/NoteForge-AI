@@ -11,3 +11,5 @@ wheels/
 
 
 .env
+credential.json
+*.pdf
