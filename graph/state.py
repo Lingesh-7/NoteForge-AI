@@ -6,7 +6,10 @@ class GraphState(TypedDict):
     syllabus: str
     has_book: bool
     vectorstore: Any        # stores FAISS or None
-    api_key: str            # GROQ API key from UI
+    source_id: str           # hash of the uploaded book ("" if none); scopes the shared cache
+    api_key: str             # OpenRouter API key from UI
+    model: str               # OpenRouter model id
+    tavily_api_key: str      # Tavily API key (app-level secret)
 
     # -------- TOPIC FLOW --------
     topics: List[str]

@@ -53,16 +53,24 @@ pip install -r requirements.txt
 
 ---
 
-## 🔐 Environment Setup
+## 🔐 Keys
 
-Create a `.env` file in the root directory:
+| Key | Who provides it | Where it goes |
+|---|---|---|
+| OpenRouter API key | Each visitor | Pasted into the app sidebar. Used for that session only, never stored. |
+| `TAVILY_API_KEY` | The app owner (optional) | `.env` in the project root. |
+
+Without `TAVILY_API_KEY` the app still runs: notes come from an uploaded book PDF, or from the model's own knowledge if there is no PDF.
+
+Create `.env` in the root directory:
 
 ```env
-GROQ_API_KEY=your_api_key
 TAVILY_API_KEY=your_api_key
 ```
 
-> ⚠️ **Important:** Never commit `.env` to GitHub. Ensure it is added to `.gitignore`.
+> ⚠️ **Important:** Never commit `.env`. It is in `.gitignore`.
+>
+> The app reads keys from environment variables only (`.env` is loaded into them at startup); it does not use `secrets.toml`. Because `.env` is not in the repo, a hosted copy needs the same variable set in the host's environment. On Streamlit Cloud, the lines pasted into **Settings > Secrets** are exposed to the app as environment variables, so no code change is needed.
 
 ---
 
@@ -74,13 +82,30 @@ streamlit run app.py
 
 ---
 
+## ☁️ Deploy on Streamlit Community Cloud
+
+```text
+1. Push the repo to GitHub.
+2. On share.streamlit.io choose New app, pick the repo, branch main, file app.py.
+3. Under Advanced settings choose Python 3.13 and paste into Secrets:
+       TAVILY_API_KEY = "tvly-..."
+4. Deploy.
+```
+
+Streamlit Cloud installs from `uv.lock`, which pins CPU-only PyTorch on Linux. To change a dependency, edit `pyproject.toml`, run `uv lock`, mirror the change in `requirements.txt`, and commit all three.
+
+---
+
 ## 🔄 Steps
 
 ```text
-1. Enter the syllabus
-2. Upload reference PDF (optional)
-3. Click Generate Notes
-4. Download the structured PDF
+1. Paste your free OpenRouter API key (the app shows how to get one)
+2. Paste the syllabus, one topic per line
+3. Upload the textbook PDF (optional)
+4. Click Generate notes and follow the per-topic progress
+5. Download the PDF or Markdown
+
+The in-app Guide tab covers getting keys, writing a good syllabus and troubleshooting.
 ```
 
 ---
@@ -98,8 +123,10 @@ streamlit run app.py
 ├── rag/
 ├── utils/
 ├── fonts/
-├── assets/
-│   └── graph.png
+├── .streamlit/
+│   └── config.toml
+├── pyproject.toml
+├── uv.lock
 ├── requirements.txt
 └── README.md
 ```

@@ -1,18 +1,18 @@
-langgraph
-langchain
-langchain-core
-langchain-community
-langchain-groq
-langchain-huggingface
-
-groq
-
-faiss-cpu
-sentence-transformers
-pymupdf
-
-streamlit
-
-python-dotenv
-fpdf2
-tavily-python
+# For local `pip install -r requirements.txt`.
+# Streamlit Community Cloud installs from uv.lock (generated from pyproject.toml),
+# so change dependencies in pyproject.toml, run `uv lock`, and mirror them here.
+streamlit>=1.55,<2
+langgraph>=1.1,<2
+langchain-core>=1.2,<2
+langchain-community>=0.4,<1
+langchain-openai>=1.0,<2
+langchain-huggingface>=1.2,<2
+langchain-text-splitters>=1.1,<2
+openai>=1.50,<3
+tavily-python>=0.7,<1
+faiss-cpu>=1.13,<2
+sentence-transformers>=5.3,<6
+torch>=2.10,<3
+pymupdf>=1.27,<2
+fpdf2>=2.8,<3
+python-dotenv>=1.0,<2

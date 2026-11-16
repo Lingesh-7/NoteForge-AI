@@ -1,5 +1,6 @@
 import re
 
+
 def clean_topics(text):
     topics = []
 
@@ -12,15 +13,20 @@ def clean_topics(text):
         # remove numbering
         line = re.sub(r"^\d+[\).\-\s]*", "", line)
 
-        # split if colon exists
+        if not line:
+            continue
+
         if ":" in line:
             main, subs = line.split(":", 1)
             main = main.strip()
 
             subtopics = [s.strip() for s in subs.split(",") if s.strip()]
 
-            for sub in subtopics:
-                topics.append(f"{main} - {sub}")
+            if subtopics:
+                for sub in subtopics:
+                    topics.append(f"{main} - {sub}")
+            elif main:
+                topics.append(main)
         else:
             topics.append(line)
 
