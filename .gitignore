@@ -12,9 +12,14 @@ wheels/
 # Secrets
 .env
 
-# Local data and generated files
+# Kept on the laptop only: sample books, generated notes, demo video, scratch work
+*.pdf
+*.mp4
 cache.json
-temp.pdf
-notes.pdf
-Gold.pdf
-Working.mp4
+main.ipynb
+main.py
+
+# Only the two fonts the PDF export uses are in the repo
+fonts/*
+!fonts/DejaVuSans.ttf
+!fonts/DejaVuSans-Bold.ttf
